@@ -1,0 +1,22 @@
+""" This defines the task struct, the parser, etc..."""
+
+import os
+
+
+class Path:
+    def __init__(self, filepath):
+        if filepath[0] != "/":
+            filepath = os.getcwd() + "/" + filepath
+        if os.path.isfile(filepath):
+            self.path = filepath
+        else:
+            raise FileNotFoundError()
+
+
+TASK_STRUCT = {
+    "name": str,
+    "
+
+class TaskParser:
+
+    def __init__(self, file):

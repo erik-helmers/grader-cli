@@ -1,0 +1,3 @@
+[console_scripts]
+taskgrader = taskgrader.cli:main
+

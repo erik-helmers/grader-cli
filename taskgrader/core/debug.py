@@ -26,16 +26,8 @@ def display(mess, lvl):
         print(mess)
 
 
-def error(*mess):
-    display("{red}{bold}Error !{ec} " + " ".join(map(str, mess)), 40)
-
-
-def warninfo(*mess):
-    display("{wrn}{bold}\tWarning !{ec} " + " ".join(map(str, mess)), 30)
-
-
-def info(*mess):
-    display("{green}{bold} Info : {ec}" + " ".join(map(str, mess)), 20)
+def warnInformation(*mess):
+    display("{wrn}{bold} Warning !{ec}" + " ".join(mess), 30)
 
 
 def debug(*mess, origin=None, force=False):
@@ -46,7 +38,7 @@ def debug(*mess, origin=None, force=False):
         mess = ["val " + str(mess[0]) + " = " + str(mess[1])]
 
     mess = list(map(str, mess))
-    display(clr.colorize("Debug from {blue}{bold} %s {ec} => %s" % (
+    display(clr.colorize("Info from {blue}{bold} %s {ec} => %s" % (
         origin, " ".join(mess))), 0)
 
 

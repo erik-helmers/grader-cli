@@ -1,0 +1,13 @@
+MANIFEST.in
+README.rst
+setup.cfg
+taskgrader/__init__.py
+taskgrader/cli.py
+taskgrader/commands/__init__.py
+taskgrader/commands/base.py
+taskgrader/commands/exec.py
+taskgrader/commands/hello.py
+taskgrader/core/__init__.py
+taskgrader/core/coloration.py
+tests/test_cli.py
+tests/commands/test_hello.py

@@ -3,7 +3,7 @@
 
 from json import dumps
 from .base import BaseCmd
-from ..core import coloration as clr
+from ..utils import coloration as clr
 
 
 class Hello(BaseCmd):

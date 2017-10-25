@@ -34,4 +34,5 @@ def colorize(s):
 def no_color(s):
     return s.format(
         **shortcuts_none
+
     )
