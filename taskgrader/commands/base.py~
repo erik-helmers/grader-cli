@@ -1,0 +1,24 @@
+"""The base command."""
+
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
+class Base(object):
+    """A base command."""
+
+    def __init__(self, options, *args, **kwargs):
+        self.options = options
+        self.args = args
+        self.kwargs = kwargs
+
+    def run(self):
+        raise NotImplementedError('Cette methode doit être overridée')
