@@ -4,14 +4,16 @@ from docopt import docopt
 
 from . import __version__ as VERSION
 
-from .core.coloration import Color
+from .utils import coloration as clr
+from .utils import debug as dbg
+from .commands.base import BaseCmd
 
-helpmess = """
+__doc__ = """
 \n
-{wrn}Task grader{ec}
+{wrn}{bold}\nTask grader{ec}
 
-This little utils let you test your solutions
-by creating tests.
+This little utils let you test algorithms
+by managing the creations of test
 
 Usage:
   taskgrader hello
@@ -31,7 +33,28 @@ Help:
   https://github.com/erik-helmers/grader-cli
 """
 
-__doc__ = "hello fuck you"
+
+def findCommand(name, commands):
+
+    # Get the module corresponding to the command name
+    module = getattr(commands, name)
+
+    # Get the classes
+    commandclass = getmembers(module, isclass)
+
+    try:
+        # Try running the first BaseCmd inherited class found
+        command = [clss for cname, clss in commandclass
+                   if issubclass(clss, BaseCmd)
+                   and cname.lower() == name.lower()][0]
+    except IndexError:
+        raise AttributeError("module \n\% s\n do not contain a subclass of\
+        BaseCmd with name % s(case insensitive)" % (module, name))
+
+    dbg.debug("command", command)
+    dbg.debug("command.run", command.run)
+
+    return command
 
 
 def main():
@@ -40,17 +63,14 @@ def main():
 
     # If args given in shell doesn't check with usage then
     # the programs stop
-    options = docopt(Color.no_color(helpmess), version=VERSION)
+    options = docopt(clr.colorize(__doc__),
+                     version=VERSION,
+                     options_first=True)
 
     # Here we'll try to dynamically match the command the user is trying to run
     # with a pre-defined command class we've already created.
     for (k, v) in options.items():
         if hasattr(taskgrader.commands, k) and v:
-            module = getattr(taskgrader.commands, k)
-            taskgrader.commands = getmembers(
-                module, isclass)  # Get all commands
-            command = [command[1]
-                       for command in taskgrader.commands
-                       if command[0] != 'Base'][0]
+            command = findCommand(k, taskgrader.commands)
             command = command(options)
             command.run()

@@ -1,15 +1,11 @@
 """Exec command"""
 
-from . import base
-from .base import Base
+from .base import BaseCmd
 
 
-class Exec(Base):
+class Exec(BaseCmd):
 
     def run(self):
-        print(base.bcolors.WARNING +
-              "Not yet implented" +
-              base.bcolors.ENDC)
         print("got: " + str(self.args))
         print("got: " + str(self.kwargs))
         print("got: " + str(self.options))

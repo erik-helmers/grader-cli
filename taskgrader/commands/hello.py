@@ -2,14 +2,14 @@
 
 
 from json import dumps
-from . import base
-from .base import Base
+from .base import BaseCmd
+from ..core import coloration as clr
 
 
-class Hello(Base):
+class Hello(BaseCmd):
     """Say hello, world!"""
 
     def run(self):
-        print(base.bcolors.WARNING + 'Hello, world!' + base.bcolors.ENDC)
+        print(clr.colorize("{bold}{blue} Hello World !\n"))
         print('You supplied the following options:',
               dumps(self.options, indent=4, sort_keys=True))

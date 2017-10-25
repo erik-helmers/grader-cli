@@ -1,7 +1,7 @@
 """The base command."""
 
 
-class Base(object):
+class BaseCmd(object):
     """A base command."""
 
     def __init__(self, options, *args, **kwargs):
@@ -11,3 +11,7 @@ class Base(object):
 
     def run(self):
         raise NotImplementedError('Cette methode doit être overridée')
+
+    @classmethod
+    def isCmd(clss):
+        return clss.__name__ != "BaseCmd"
