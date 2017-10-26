@@ -53,6 +53,9 @@ TASK_STRUCT = {
 }
 
 
+def openTaskFile():
+
+
 def parseTaskFile(file):
 
     output = {}
@@ -78,19 +81,19 @@ def parseTaskFile(file):
                 "Malformed line: '%s', '%s' not in TASK_STRUCT keys" % (
                     line, parts[0]))
 
-        dbg.debug("parts", parts)
+        #dbg.debug("parts", parts)
 
         valuetype = TASK_STRUCT[parts[0]]
         value = valuetype(parts[1])
         output[parts[0]] = value
-    dbg.debug("output", dumps(output, indent=4), wcolor=False)
+    #dbg.debug("output", dumps(output, indent=4), wcolor=False)
     return output
 
 
 def writeTaskFile(file, task):
 
     attributes = [(k, v) for k, v in getmembers(task) if k in TASK_STRUCT]
-    dbg.debug("attributes", dumps(attributes, indent=4), wcolor=False)
+    #dbg.debug("attributes", dumps(attributes, indent=4), wcolor=False)
     for k, v in attributes:
         if isinstance(v, list):
             v = ",".join(v)
