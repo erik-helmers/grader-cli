@@ -8,6 +8,9 @@ from .utils import coloration as clr
 from .utils import debug as dbg
 from .commands.base import BaseCmd
 
+import sys
+
+
 __doc__ = """
 \n
 {wrn}{bold}\nTask grader{ec}
@@ -18,7 +21,9 @@ by managing the creations of test
 Usage:
   taskgrader hello
   taskgrader new
+  taskgrader load
   taskgrader exec <filename> [<stdin>] [<stdout>] [<stderr>]
+  taskgrader add (test|solution|checker) <filename> [<outfilename>]
   taskgrader -h | --help
   taskgrader --version
 
@@ -73,11 +78,17 @@ def main():
                      version=VERSION,
                      options_first=True)
     dbg.info("Launching...")
+    executed = False
     # Here we'll try to dynamically match the command the user is trying to run
     # with a pre-defined command class we've already created.
     for (k, v) in options.items():
         if hasattr(taskgrader.commands, k) and v:
+            executed = True
             command = findCommand(k, taskgrader.commands)
             command = command(options)
             command.run()
+
+    if not executed:
+        dbg.error("Command not executed. Is it in commands ?")
+        sys.exit(2)
     dbg.info("Execution ended!")

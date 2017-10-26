@@ -6,6 +6,8 @@ from . import coloration as clr
 VERBOSE_RESI = 0
 specials = {}
 
+last_call = None
+
 
 def WRITE_TO_NOTHING(*args, **kwargs):
     return
@@ -19,10 +21,11 @@ def getCallerName():
     return calframe[2][3]
 
 
-def display(mess, lvl):
+def display(mess, lvl, wcolor=True, newline=True):
 
     if lvl >= VERBOSE_RESI:
-        mess = clr.colorize(mess)
+        if wcolor:
+            mess = clr.colorize(mess)
         print(mess)
 
 
@@ -30,15 +33,17 @@ def error(*mess):
     display("{red}{bold}Error !{ec} " + " ".join(map(str, mess)), 40)
 
 
-def warninfo(*mess):
-    display("{wrn}{bold}\tWarning !{ec} " + " ".join(map(str, mess)), 30)
+def warninfo(*mess, wcolor=True):
+    display("{wrn}{bold}\tWarning !{ec} " +
+            " ".join(map(str, mess)), 30, wcolor)
 
 
-def info(*mess):
-    display("{green}{bold} Info : {ec}" + " ".join(map(str, mess)), 20)
+def info(*mess, wcolor=True):
+    display("{green}{bold} Info : {ec}" +
+            " ".join(map(str, mess)), 20, wcolor=wcolor)
 
 
-def debug(*mess, origin=None, force=False):
+def debug(*mess, origin=None, force=False, wcolor=True):
 
     if origin is None:
         origin = getCallerName()
@@ -46,8 +51,8 @@ def debug(*mess, origin=None, force=False):
         mess = ["val " + str(mess[0]) + " = " + str(mess[1])]
 
     mess = list(map(str, mess))
-    display(clr.colorize("Debug from {blue}{bold} %s {ec} => %s" % (
-        origin, " ".join(mess))), 0)
+    display("Debug from {blue}{bold} %s {ec} => %s" % (
+        origin, " ".join(mess)), 0, wcolor=wcolor)
 
 
 def DebugForceTo(func, force):
